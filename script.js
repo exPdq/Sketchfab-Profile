@@ -1,7 +1,7 @@
 async function fetchStats() {
-    const username = "yagiz.slz";  // Sketchfab kullanıcı adı
-    const accessToken = "a52a9b2ad0484c77ac1f79174854dafa";  // API anahtarınız
-    const url = `https://api.sketchfab.com/v3/users/${username}`;  // Kullanıcı bilgileri endpoint'i
+    const username = "yagiz.slz";  // Sketchfab kullanıcı adın
+    const accessToken = "a52a9b2ad0484c77ac1f79174854dafa";  // API anahtarın
+    const url = `https://api.sketchfab.com/v3/users/${username}`;
 
     try {
         const response = await fetch(url, {
@@ -11,14 +11,15 @@ async function fetchStats() {
         if (!response.ok) throw new Error("API'den veri çekilemedi!");
 
         const data = await response.json();
+        console.log("API Yanıtı:", data); // Gelen veriyi konsola yazdır
 
-        // API'den gelen verileri HTML içerisine yerleştir
-        document.getElementById("totalViews").textContent = data.viewCount || "Bilinmiyor";
-        document.getElementById("totalLikes").textContent = data.likeCount || "Bilinmiyor";
+        // Verilerin gerçekten gelip gelmediğini kontrol et
+        document.getElementById("views").textContent = data.viewCount ?? "Bilinmiyor";
+        document.getElementById("likes").textContent = data.likeCount ?? "Bilinmiyor";
+
     } catch (error) {
         console.error("Hata:", error);
     }
 }
 
-// Sayfa yüklendiğinde API verilerini çek
 window.onload = fetchStats;
