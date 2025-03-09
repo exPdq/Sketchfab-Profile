@@ -75,16 +75,16 @@
             background-color: #555;
         }
         .stats {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 150px;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 16px;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            font-size: 16px;
 }
 
 .stats-left {
@@ -93,82 +93,121 @@
 
 .stats-right {
     right: 10px;
-}    
+}
+.container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    width: 30%;
+    text-align: center;
+}
+
+.stat-box-container {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
     </style>
 </head>
 <body>
     <header>
-        <h1>3D Model Portföyü</h1>
+        <h1>3D Model Portfolio</h1>
     </header>
     
     <script>
-        // API'den veri çekme işlemi
-        fetch("https://api.sketchfab.com/v3/models?api_key=a52a9b2ad0484c77ac1f79174854dafa") // Buraya API URL'ini yaz
-          .then(response => response.json()) // API yanıtını JSON'a çevir
-          .then(data => {
-            console.log(data); // Gelen veriyi konsola yazdırıyoruz (debug için)
-            
-            // Veriyi sayfada göstermek için
-            // Örneğin; #statistik kısmına gelen veriyi yerleştir
-            document.getElementById("totalViews").innerText = data.totalViews;
-            document.getElementById("totalLikes").innerText = data.totalLikes;
-          })
-          .catch(error => {
-            console.error("API hatası:", error); // Hata varsa konsola yazdır
-          });
-      </script>
-      <section>
+        const UID = "795063e510d94245941600f7a10c7f4f"; // Sketchfab UID'in
+        const API_URL = `https://api.sketchfab.com/v3/users/${UID}`;
+
+        async function fetchStats() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) {
+                    throw new Error("API'den veri çekilemedi!");
+                }
+
+                const data = await response.json();
+
+                // Beğeni, takipçi ve model sayısını çekiyoruz
+                document.getElementById("likes").textContent = `Beğeni: ${data.likeCount}`;
+                document.getElementById("followers").textContent = `Takipçiler: ${data.followerCount}`;
+                document.getElementById("models").textContent = `Model Sayısı: ${data.modelCount}`;
+
+            } catch (error) {
+                console.error("Hata:", error);
+            }
+        }
+
+        // Sayfa yüklendiğinde verileri çek
+        fetchStats();
+    </script>
+      <section><section>
         <h2>Model Portföyüm</h2>
-      
+    
         <!-- İstatistikler -->
-        <div id="statistics">
-          <p>Toplam Görüntülenme: <span id="totalViews">Yükleniyor...</span></p>
-          <p>Toplam Beğeni: <span id="totalLikes">Yükleniyor...</span></p>
+        <div class="stat-box-container">
+            <center><h2>Yağız Solmaz</h2></center>
+            <div class="container">
+                <div id="likes" class="stat-box">Beğeni: Yükleniyor...</div>
+                <div id="followers" class="stat-box">Takipçiler: Yükleniyor...</div>
+                <div id="models" class="stat-box">Model Sayısı: Yükleniyor...</div>
+            </div>
         </div>
-      
+        
         <div class="portfolio">
-          <!-- Burada portfolio öğeleri olacak -->
+            <!-- Burada portfolio öğeleri olacak -->
         </div>
-      </section>
+    </section>
+    </section>
       
     <section>
-        <h2>Model Portföyüm</h2>
         <div class="portfolio">
             <div class="portfolio-item">
                 <iframe src="https://sketchfab.com/models/661df3beb4aa4f1e8330db533517f7e1/embed" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
-                <h3>Model 1: Example Model</h3>
+                <h3>Model 1: Game Room</h3>
             </div>
             <div class="portfolio-item">
                 <iframe src="https://sketchfab.com/models/8b3555c8083b4cb9a248feea44d186d6/embed" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
-                <h3>Model 2: Example Model</h3>
+                <h3>Model 2: Garage Shelf</h3>
             </div>
             <div class="portfolio-item">
                 <iframe src="https://sketchfab.com/models/ec6deb6efb16472db27b86461950a98b/embed" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
-                <h3>Model 3: Example Model</h3>
+                <h3>Model 3: AIM-9L Sidewinder</h3>
             </div>
             <div class="portfolio-item">
                 <iframe src="https://sketchfab.com/models/ae7d0b1fbb6e412983cd83c2961726fe/embed" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
-                <h3>Model 4: Example Model</h3>
+                <h3>Model 4: Interrogation Room</h3>
             </div>
             <div class="portfolio-item">
                 <iframe src="https://sketchfab.com/models/0aeb6fa38b1640b69ffbb9c739da6492/embed" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
-                <h3>Model 5: Example Model</h3>
+                <h3>Model 5: Game Room</h3>
             </div>
             <div class="portfolio-item">
                 <iframe src="https://sketchfab.com/models/3abdb3027fcd4187ba1359fb6f196884/embed" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
-                <h3>Model 6: Example Model</h3>
+                <h3>Model 6: Rubik's Cube</h3>
             </div>
             <div class="portfolio-item">
                 <iframe src="https://sketchfab.com/models/465a5d9a02f74914b1e32de0ef98aab7/embed" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
-                <h3>Model 7: Example Model</h3>
+                <h3>Model 7: Game Room v2</h3>
             </div>
             <div class="portfolio-item">
                 <iframe src="https://sketchfab.com/models/b5e78b2cfe82474fba5d1058b7c1dec4/embed" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
-                <h3>Model 8: Example Model</h3>
+                <h3>Model 8: Old Sword</h3>
             </div>
             <div class="portfolio-item">
                 <iframe src="https://sketchfab.com/models/9c783698663b4198879349b5ed946e6a/embed" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
-                <h3>Model 9: Example Model</h3>
+                <h3>Model 9: Gaming Chair</h3>
             </div>
             <!-- Yeni modellerin için buraya eklemeler yapabilirsin -->
         </div>
